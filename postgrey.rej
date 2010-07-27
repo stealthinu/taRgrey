@@ -1,0 +1,37 @@
+***************
+*** 506,512 ****
+          'whitelist-clients=s@', 'whitelist-recipients=s@',
+          'syslogfacility|syslog-facility|facility=s',
+          'retry-window=s', 'greylist-action=s', 'greylist-text=s', 'privacy',
+-         'hostname=s', 'exim', 'listen-queue-size=i'
+      ) or exit(1);
+      # note: lookup-by-subnet can be given for compatibility, but it is default
+      # so do not do nothing with it...
+--- 566,573 ----
+          'whitelist-clients=s@', 'whitelist-recipients=s@',
+          'syslogfacility|syslog-facility|facility=s',
+          'retry-window=s', 'greylist-action=s', 'greylist-text=s', 'privacy',
++         'hostname=s', 'exim', 'listen-queue-size=i',
++         'tarpit:s', 'targrey', 'retry-count=i', 'auto-whitelist-delay=i',
+      ) or exit(1);
+      # note: lookup-by-subnet can be given for compatibility, but it is default
+      # so do not do nothing with it...
+***************
+*** 612,617 ****
+              privacy => defined $opt{'privacy'},
+              hostname => defined $opt{hostname} ? $opt{hostname} : hostname,
+              exim => defined $opt{'exim'},
+          },
+      }, 'postgrey';
+  
+--- 675,684 ----
+              privacy => defined $opt{'privacy'},
+              hostname => defined $opt{hostname} ? $opt{hostname} : hostname,
+              exim => defined $opt{'exim'},
++             tarpit           => defined $opt{'tarpit'} ?
++                 ($opt{'tarpit'} ne '' ?
++                     $opt{'tarpit'} : 65) : undef,
++             targrey          => defined $opt{'targrey'},
+          },
+      }, 'postgrey';
+  
